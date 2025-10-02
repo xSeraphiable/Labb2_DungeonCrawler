@@ -4,7 +4,7 @@
 class LevelData
 {
     private List<LevelElement> _elements = new List<LevelElement>();
-    public List<LevelElement> Elements { get; }
+    public List<LevelElement> Elements { get { return _elements; } }
 
     public void Load(string filename)
     {
