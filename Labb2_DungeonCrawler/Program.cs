@@ -9,7 +9,10 @@ Console.WriteLine(Directory.GetCurrentDirectory());
 var levelOne = new LevelData();
 levelOne.Load("Level1.txt");
 
+Console.Clear();
 foreach (var element in levelOne.Elements)
 {
-    Console.Write(element.displayChar);
+    element.Draw();
 }
+
+Console.ReadLine();

@@ -10,20 +10,28 @@ class LevelData
     {
         using (StreamReader reader = new StreamReader(filename))
         {
+            int row = 0;
             while (!reader.EndOfStream)
             {
-                if (reader.Read() is 'r')
+                string line = reader.ReadLine();
+                for (int i = 0; i < line.Length; i++)
                 {
-                    _elements.Add(new Rat());
+                    if (line[i] == 'r')
+                    {
+                        _elements.Add(new Rat() { x = i, y = row });
+                    }
+                    else if (line[i] == '#')
+                    {
+                        _elements.Add(new Wall() { x = i, y = row });
+                    }
+                    else if (line[i] == 's')
+                    {
+                        _elements.Add(new Snake() { x = i, y = row });
+                    }
+                    
                 }
-                else if (reader.Read() is '#')
-                {
-                    _elements.Add(new Wall());
-                }
-                else if (reader.Read() is 's')
-                {
-                    _elements.Add(new Snake());
-                }
+                row++;
+                
             }
         }
     }
