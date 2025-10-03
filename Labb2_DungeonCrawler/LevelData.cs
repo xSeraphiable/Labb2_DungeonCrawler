@@ -1,6 +1,4 @@
 ﻿
-
-
 class LevelData
 {
     private List<LevelElement> _elements = new List<LevelElement>();
@@ -28,10 +26,13 @@ class LevelData
                     {
                         _elements.Add(new Snake() { x = i, y = row });
                     }
-                    
+                    else if (line[i] == '@')
+                    {
+                        _elements.Add(new Player() { x = i, y = row }); 
+                    }
                 }
                 row++;
-                
+
             }
         }
     }
