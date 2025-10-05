@@ -8,6 +8,7 @@
 
     public Dice DefenceDice { get; set; }
 
-    public abstract void Update();
+    //TODO: behöver antagligen också ta inparametrar med spelarens koordinater.
+    public abstract void Update(IReadOnlyList<LevelElement> Elements);
 
 }

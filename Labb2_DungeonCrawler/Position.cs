@@ -8,7 +8,8 @@ namespace Labb2_DungeonCrawler
 {
     class Position
     {
-              public static void IsPlayerInsideLevel(Player p, IReadOnlyList<LevelElement> Elements, int oldx, int oldy)
+       
+        public static void IsPlayerInsideLevel(Player p, IReadOnlyList<LevelElement> Elements, int oldx, int oldy)
         {
             foreach (var element in Elements)
             {

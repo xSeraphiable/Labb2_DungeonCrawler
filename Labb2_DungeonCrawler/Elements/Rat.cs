@@ -11,46 +11,48 @@ class Rat : Enemy
         this.AttackDice = new Dice(3, 6, 2);
         this.DefenceDice = new Dice(1, 6, 1);
     }
-    public override void Update()
+    public override void Update(IReadOnlyList<LevelElement> Elements)
     {
         Random random = new Random();
-       // LevelData levelElements = new LevelData();
+        LevelData levelElements = new LevelData();
 
-        if (random.Next(4) == 0)
+        int rnd = random.Next(4);
+
+        if (rnd == 0)
         {
-            //if (levelElements.IsPositionEmpty(this.x, this.y + 1))
-            //{
+            if (levelElements.IsFree(Elements, this.x, this.y + 1))
+            {
                 Console.SetCursorPosition(x, y);
                 Console.Write(' ');
                 this.y++;
-            //}
+            }
         }
-        else if (random.Next(4) == 1)
+        else if (rnd == 1)
         {
-            //if (levelElements.IsPositionEmpty(this.x, this.y - 1))
-            //{
+            if (levelElements.IsFree(Elements,this.x, this.y - 1))
+            {
                 Console.SetCursorPosition(x, y);
                 Console.Write(' ');
                 this.y--;
-            //}
+            }
         }
-        else if (random.Next(4) == 2)
+        else if (rnd == 2)
         {
-            //if (levelElements.IsPositionEmpty(this.x+1, this.y))
-            //{
+            if (levelElements.IsFree(Elements,this.x + 1, this.y))
+            {
                 Console.SetCursorPosition(x, y);
                 Console.Write(' ');
                 this.x++;
-            //}
+            }
         }
-        else if (random.Next(4) == 3)
+        else if (rnd == 3)
         {
-            //if (levelElements.IsPositionEmpty(this.x -1, this.y))
-            //{
+            if (levelElements.IsFree(Elements, this.x - 1, this.y))
+            {
                 Console.SetCursorPosition(x, y);
-                Console.Write(' ');
-                this.x--;
-            //}
+            Console.Write(' ');
+            this.x--;
+            }
         }
     }
 }

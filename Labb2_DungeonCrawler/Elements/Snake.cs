@@ -12,7 +12,7 @@ class Snake : Enemy
         this.DefenceDice = new Dice(1, 8, 5);
     }
 
-    public override void Update()
+    public override void Update(IReadOnlyList<LevelElement> Elements)
     {
         
     }

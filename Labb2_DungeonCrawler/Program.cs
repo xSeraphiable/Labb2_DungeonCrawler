@@ -68,13 +68,7 @@ while (true)
         {
             if (element is Enemy enemy)
             {
-                enemy.Update(); 
-                //Jag vill göra Update i Rat-klassen men mitt problem är att jag inte fattar
-                //hur jag kollar om nya positionen är ledig eller inte.
-                //Måste väl vara ordningen 1. Random position 2. Kolla om random är ledig 3.1 Om nej så stanna kvar
-                //3.2 Om ja så sudda ut gammal position och uppdatera till ny position. Måla ut ny posotion.
-
-
+                enemy.Update(levelOne.Elements);
                 enemy.Draw();
             }
         }
