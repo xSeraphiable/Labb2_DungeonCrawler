@@ -10,7 +10,7 @@ Console.WriteLine("Detta är mitt Dungeon Crawler-spel");
 Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
 Console.WriteLine(Directory.GetCurrentDirectory());
 
-
+Console.CursorVisible = false;
 var levelOne = new LevelData();
 levelOne.Load("Level1.txt");
 

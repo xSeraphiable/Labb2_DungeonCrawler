@@ -8,7 +8,7 @@ class LevelData
     public int PlayerStartingY { get; set; } = 0;
 
 
-    //TODO: Råttorna rymmer ibland.. fixa det!
+    
     public bool IsFree(IReadOnlyList<LevelElement> Elements, int x, int y)
     {
         foreach (LevelElement element in Elements)
