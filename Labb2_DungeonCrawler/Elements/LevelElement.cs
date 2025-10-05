@@ -14,5 +14,6 @@ abstract class LevelElement
         Console.SetCursorPosition(this.x, this.y);
         Console.ForegroundColor = this.Color;
         Console.Write(this.displayChar);
+        Console.ResetColor();
     }
 }

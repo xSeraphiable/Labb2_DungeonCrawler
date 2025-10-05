@@ -1,5 +1,9 @@
 ﻿
+using System.Data;
+using Labb2_DungeonCrawler;
+
 Console.Title = "Ame's DC";
+
 Console.WriteLine("Detta är mitt Dungeon Crawler-spel");
 
 
@@ -52,10 +56,7 @@ while (true)
             break;
         }
 
-       // IsPlayerInsideLevel(myPlayer);
-
-        //  myPlayer.x = IsPlayerInsideLevel(myPlayer.x); //behöver jag använda reference type här?
-        //   myPlayer.y = IsPlayerInsideLevel(myPlayer.y);
+        Position.IsPlayerInsideLevel(myPlayer, levelOne.Elements, oldx, oldy);
 
 
         Console.SetCursorPosition(oldx, oldy);
@@ -63,26 +64,23 @@ while (true)
         Console.SetCursorPosition(myPlayer.x, myPlayer.y);
         Console.Write('@');
 
+        foreach (var element in levelOne.Elements)
+        {
+            if (element is Enemy enemy)
+            {
+                enemy.Update(); 
+                //Jag vill göra Update i Rat-klassen men mitt problem är att jag inte fattar
+                //hur jag kollar om nya positionen är ledig eller inte.
+                //Måste väl vara ordningen 1. Random position 2. Kolla om random är ledig 3.1 Om nej så stanna kvar
+                //3.2 Om ja så sudda ut gammal position och uppdatera till ny position. Måla ut ny posotion.
+
+
+                enemy.Draw();
+            }
+        }
+
     }
 
 }
 
-//static void IsPlayerInsideLevel(Player p)
-//{
-//    if (p.x == 0)
-//    {
-//        p.x += 1;
-
-//    }
-
-//    if (p.y == 0)
-//    {
-//        p.y += 1;
-//    }
-//    else if (z >= dimension - 1)
-//    {
-//        return dimension - 2;
-//    }
-//    else return z;
-//}
 

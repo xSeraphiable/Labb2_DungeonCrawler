@@ -1,4 +1,6 @@
-﻿class Snake : Enemy
+﻿using System.Security.Cryptography;
+
+class Snake : Enemy
 {
     public Snake()
     {
@@ -12,6 +14,6 @@
 
     public override void Update()
     {
-        throw new NotImplementedException();
+        
     }
-}   
+}

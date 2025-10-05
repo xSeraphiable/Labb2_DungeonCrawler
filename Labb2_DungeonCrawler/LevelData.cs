@@ -7,7 +7,18 @@ class LevelData
     public int PlayerStartingX { get; set; } = 0;
     public int PlayerStartingY { get; set; } = 0;
 
-    
+
+    public bool IsPositionEmpty(int x, int y)
+    {
+        foreach (LevelElement element in _elements)
+        {
+            if (element.x == x && element.y == y)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void Load(string filename)
     {
