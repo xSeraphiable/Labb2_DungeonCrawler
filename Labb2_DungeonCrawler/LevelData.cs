@@ -8,9 +8,10 @@ class LevelData
     public int PlayerStartingY { get; set; } = 0;
 
 
-    public bool IsPositionEmpty(int x, int y)
+    //TODO: Råttorna rymmer ibland.. fixa det!
+    public bool IsFree(IReadOnlyList<LevelElement> Elements, int x, int y)
     {
-        foreach (LevelElement element in _elements)
+        foreach (LevelElement element in Elements)
         {
             if (element.x == x && element.y == y)
             {
