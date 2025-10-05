@@ -4,6 +4,11 @@ class LevelData
     private List<LevelElement> _elements = new List<LevelElement>();
     public List<LevelElement> Elements { get { return _elements; } }
 
+    public int PlayerStartingX { get; set; } = 0;
+    public int PlayerStartingY { get; set; } = 0;
+
+    
+
     public void Load(string filename)
     {
         using (StreamReader reader = new StreamReader(filename))
@@ -28,7 +33,8 @@ class LevelData
                     }
                     else if (line[i] == '@')
                     {
-                        _elements.Add(new Player() { x = i, y = row }); 
+                        PlayerStartingX = i;
+                        PlayerStartingY = row;
                     }
                 }
                 row++;
