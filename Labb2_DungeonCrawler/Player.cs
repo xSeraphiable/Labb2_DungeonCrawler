@@ -4,6 +4,9 @@
     public Dice AttackDice { get; } = new Dice(3, 6, 2);
     public Dice DefenceDice { get; } = new Dice(2, 6, 0);
 
+    public int OldX { get; set; }
+    public int OldY { get; set; }
+
 
     public Player(int x, int y)
     {

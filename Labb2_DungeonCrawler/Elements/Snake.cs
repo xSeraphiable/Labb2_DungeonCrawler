@@ -15,15 +15,23 @@ class Snake : Enemy
 
     public override void Update(IReadOnlyList<LevelElement> Elements, Player p)
     {
-        if ((Position.CalculateDistance(x, y, p.x, p.y)) < 3)
+        //TODO: Gör om villkoren. Just nu följer ormarna efter spelaren...
+        if ((Position.CalculateDistance(this.x, this.y, p.x, p.y)) < 3)
         {
-            if (p.x < p.y)
-            {
+            Console.SetCursorPosition(this.x, this.y);
+            Console.Write(" ");
 
+            if (p.x - p.OldX == 0)
+            {
+                if (Position.IsAvailable(Elements, this.x, this.y + p.y - p.OldY)) // TODO: kanske att jag ska använda en while-loop här på något sätt istället.
+                {
+                    this.y += p.y - p.OldY;
+                }
             }
             else
             {
-
+                if (Position.IsAvailable(Elements, this.x + p.x - p.OldX, this.y))
+                this.x += p.x - p.OldX;
             }
         }
     }

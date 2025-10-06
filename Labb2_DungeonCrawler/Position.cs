@@ -24,7 +24,7 @@ namespace Labb2_DungeonCrawler
         //TODO: Du kan även låta den returnera en bas-klass (t.ex. LevelElement),
         //och sedan låta den som anropar avgöra vad det är för något.
         //Då kan metoden heta t.ex.GetCollidingElement() — mer generiskt och flexibelt.
-        public static Enemy CheckCollisionAndReturnEnemy(Player p, IReadOnlyList<LevelElement> Elements, int oldx, int oldy)
+        public static Enemy CheckCollisionAndReturnEnemy(Player p, IReadOnlyList<LevelElement> Elements)
         {
             foreach (var element in Elements)
             {
@@ -32,22 +32,22 @@ namespace Labb2_DungeonCrawler
                 {
                     if (element is Wall)
                     {
-                        p.x = oldx;
-                        p.y = oldy;
+                        p.x = p.OldX;
+                        p.y = p.OldY;
                         return null;
                     }
 
                     else if (element is Rat)
                     {
-                        p.x = oldx;
-                        p.y = oldy;
+                        p.x = p.OldX;
+                        p.y = p.OldY;
                         return (Rat)element;
                     }
 
                     else if (element is Snake)
                     {
-                        p.x = oldx;
-                        p.y = oldy;
+                        p.x = p.OldX;
+                        p.y = p.OldY;
                         return ((Snake)element);
                     }
                 }

@@ -25,8 +25,8 @@ myPlayer.Draw();
 
 while (true)
 {
-    int oldx = myPlayer.x;
-    int oldy = myPlayer.y;
+    myPlayer.OldX = myPlayer.x;
+    myPlayer.OldY = myPlayer.y;
 
     var key = Console.ReadKey(true);
     if (key.Key == ConsoleKey.UpArrow)
@@ -59,10 +59,10 @@ while (true)
     Console.SetCursorPosition(0, 20);
     Console.Write(new string(' ', Console.WindowWidth));
     Console.SetCursorPosition(0, 20);
-    Console.WriteLine((Position.CheckCollisionAndReturnEnemy(myPlayer, currentLevel.Elements, oldx, oldy)?.EnemyName));
+    Console.WriteLine((Position.CheckCollisionAndReturnEnemy(myPlayer, currentLevel.Elements)?.EnemyName));
 
 
-    Console.SetCursorPosition(oldx, oldy);
+    Console.SetCursorPosition(myPlayer.OldX, myPlayer.OldY);
     Console.Write(' ');
     Console.SetCursorPosition(myPlayer.x, myPlayer.y);
     Console.Write('@');
@@ -70,18 +70,12 @@ while (true)
 
     foreach (var element in currentLevel.Elements)
     {
-        if (element is Rat rat)
+        if (element is Enemy enemy)
         {
-            rat.Update(currentLevel.Elements, myPlayer);
-            rat.Draw();
+            enemy.Update(currentLevel.Elements, myPlayer);
+            enemy.Draw();
         }
-        else if (element is Snake snake)
-        {
-            snake.Update(currentLevel.Elements, myPlayer);
-            snake.Draw();
-        }
-
-        }
+    }
 
 
 
