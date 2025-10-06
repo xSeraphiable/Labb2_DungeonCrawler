@@ -22,19 +22,19 @@ class Dice
         this.modifier = modifier;
     }
 
- 
-    public int Roll(Dice dice)
+
+    public int Roll()
     {
         int sum = 0;
 
         Random rnd = new Random();
 
-        for (int i = 0; i < dice.numberOfDice; i++)
+        for (int i = 0; i < numberOfDice; i++)
         {
-            sum += rnd.Next(dice.sidesPerDice);
+            sum += rnd.Next(sidesPerDice);
         }
 
-        return sum + dice.modifier;
+        return sum + modifier;
     }
 
     public override string ToString()

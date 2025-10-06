@@ -1,46 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Labb2_DungeonCrawler
 {
-    class Position
+    static class Position
     {
-       
-        public static void IsPlayerInsideLevel(Player p, IReadOnlyList<LevelElement> Elements, int oldx, int oldy)
+        public static bool IsAvailable(IReadOnlyList<LevelElement> Elements, int x, int y) //kan jag använda retur av objekt här precis som för spelaren?
+        {
+            foreach (LevelElement element in Elements)
+            {
+                if (element.x == x && element.y == y)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //TODO: Du kan även låta den returnera en bas-klass (t.ex. LevelElement),
+        //och sedan låta den som anropar avgöra vad det är för något.
+        //Då kan metoden heta t.ex.GetCollidingElement() — mer generiskt och flexibelt.
+        public static Enemy CheckCollisionAndReturnEnemy(Player p, IReadOnlyList<LevelElement> Elements, int oldx, int oldy)
         {
             foreach (var element in Elements)
             {
                 if (element.x == p.x && element.y == p.y)
                 {
-                    if (element.displayChar == '#')
+                    if (element is Wall)
                     {
                         p.x = oldx;
                         p.y = oldy;
-                        break;
+                        return null;
                     }
 
-                    else if (element.displayChar == 'r')
+                    else if (element is Rat)
                     {
                         p.x = oldx;
                         p.y = oldy;
-                        //start attack
+                        return (Rat)element;
                     }
 
-                    else if (element.displayChar == 's')
+                    else if (element is Snake)
                     {
                         p.x = oldx;
                         p.y = oldy;
-                        //start attack
+                        return ((Snake)element);
                     }
-
-
                 }
             }
+
+            return null;
         }
 
+        public static bool CheckPlayerCollision(Player p, int x, int y)
+        {
+            if (x == p.x && y == p.y)
+            {
+                return true;
+            }
+
+            else return false;
+
+        }
+
+        public static int CalculateDistance(int x, int y, int a, int b)
+        {
+            return (int)Math.Round(Math.Sqrt(((b - y) * (b - y)) + ((a - x) * (a - x))));
+        }
 
     }
 }

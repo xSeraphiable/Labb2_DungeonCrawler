@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Labb2_DungeonCrawler;
+using System.Security.Cryptography;
 
 class Snake : Enemy
 {
@@ -12,8 +13,18 @@ class Snake : Enemy
         this.DefenceDice = new Dice(1, 8, 5);
     }
 
-    public override void Update(IReadOnlyList<LevelElement> Elements)
+    public override void Update(IReadOnlyList<LevelElement> Elements, Player p)
     {
-        
+        if ((Position.CalculateDistance(x, y, p.x, p.y)) < 3)
+        {
+            if (p.x < p.y)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 }
