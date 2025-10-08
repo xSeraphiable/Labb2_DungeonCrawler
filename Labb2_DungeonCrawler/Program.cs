@@ -18,7 +18,10 @@ Console.Clear();
 
 foreach (var element in currentLevel.Elements)
 {
-    element.Draw();
+    if (element is Wall && (Position.CalculateDistance(element.x, element.y, myPlayer.x, myPlayer.y) <= 5))
+    {
+        element.Draw();
+    }
 }
 
 myPlayer.Draw();
@@ -73,8 +76,17 @@ while (true)
         if (element is Enemy enemy)
         {
             enemy.Update(currentLevel.Elements, myPlayer);
-            enemy.Draw();
+            if (Position.CalculateDistance(enemy.x, enemy.y, myPlayer.x, myPlayer.y) <= 5)
+            {
+                enemy.Draw();
+            }
         }
+        if (element is Wall && (Position.CalculateDistance(element.x, element.y, myPlayer.x, myPlayer.y) <= 5))
+        {
+            element.Draw();
+
+        }
+
     }
 
 
