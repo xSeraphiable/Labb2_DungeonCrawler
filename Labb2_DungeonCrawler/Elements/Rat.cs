@@ -4,10 +4,10 @@ class Rat : Enemy
 {
     public Rat()
     {
-        this.EnemyName = "Rat";
+        this.Name = "Rat";
         this.Health = 10;
         this.Color = ConsoleColor.Yellow;
-        this.displayChar = 'r';
+        this.elementChar = 'r';
         this.AttackDice = new Dice(3, 6, 2);
         this.DefenceDice = new Dice(1, 6, 1);
     }
@@ -22,8 +22,7 @@ class Rat : Enemy
         {
             if (Position.CheckPlayerCollision(p, x, y + 1))
             {
-                Console.SetCursorPosition(0, 22);
-                Console.WriteLine("Attack");
+          
                 //Attack
             }
             else if (Position.IsAvailable(Elements, this.x, this.y + 1))
@@ -37,8 +36,7 @@ class Rat : Enemy
         {
             if (Position.CheckPlayerCollision(p, x, y - 1))
             {
-                Console.SetCursorPosition(0, 22);
-                Console.WriteLine("Attack");
+            
                 //Attack
             }
             else if (Position.IsAvailable(Elements, this.x, this.y - 1))
@@ -52,8 +50,7 @@ class Rat : Enemy
         {
             if (Position.CheckPlayerCollision(p, x +1, y))
             {
-                Console.SetCursorPosition(0, 22);
-                Console.WriteLine("Attack");
+          
                 //Attack
             }
             else if (Position.IsAvailable(Elements, this.x + 1, this.y))
@@ -67,8 +64,7 @@ class Rat : Enemy
         {
             if (Position.CheckPlayerCollision(p, x - 1, y))
             {
-                Console.SetCursorPosition(0, 22);
-                Console.WriteLine("Attack");
+               
                 //Attack
             }
             else if (Position.IsAvailable(Elements, this.x - 1, this.y))

@@ -2,7 +2,7 @@
 {
     public Wall()
     {
-        this.displayChar = '#';
+        this.elementChar = '#';
         this.Color = ConsoleColor.Gray;
     }
 }

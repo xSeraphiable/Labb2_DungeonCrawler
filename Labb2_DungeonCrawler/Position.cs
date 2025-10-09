@@ -72,5 +72,14 @@ namespace Labb2_DungeonCrawler
             return (int)Math.Round(Math.Sqrt(((b - y) * (b - y)) + ((a - x) * (a - x))));
         }
 
+        public static void SetCursorAndWipe(int r, int c)
+        {
+            Thread.Sleep(500);
+            Console.SetCursorPosition(r, c );
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(r, c);
+
+        }
+
     }
 }

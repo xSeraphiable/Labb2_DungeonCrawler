@@ -5,15 +5,22 @@ using Labb2_DungeonCrawler;
 Console.Title = "Ame's DC";
 
 Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
-Console.WriteLine(Directory.GetCurrentDirectory());
 
-Console.CursorVisible = false;
 
 var currentLevel = new LevelData();
 currentLevel.Load("Level1.txt");
 
 var myPlayer = new Player(currentLevel.PlayerStartingX, currentLevel.PlayerStartingY);
 
+Console.Write("Enter name: ");
+myPlayer.Name = Console.ReadLine();
+
+Console.WriteLine("Welcome " + myPlayer.Name);
+Thread.Sleep(1000);
+Console.CursorVisible = false;
+Console.WriteLine("Loading level");
+
+Thread.Sleep(2000);
 Console.Clear();
 
 foreach (var element in currentLevel.Elements)
@@ -26,8 +33,12 @@ foreach (var element in currentLevel.Elements)
 
 myPlayer.Draw();
 
+int rounds = 0;
 while (true)
 {
+
+    Console.SetCursorPosition(0, 0);
+    Console.WriteLine($"|||   Player: {myPlayer.Name}  |  Current health: {myPlayer.Health}  |  Rounds: {rounds}  |||");
     myPlayer.OldX = myPlayer.x;
     myPlayer.OldY = myPlayer.y;
 
@@ -55,21 +66,21 @@ while (true)
         break;
     }
 
-    //här behöver jag fånga upp fienden som returneras och använda en Attack-metod.
+    var target = Position.CheckCollisionAndReturnEnemy(myPlayer, currentLevel.Elements);
 
-    Console.SetCursorPosition(0, 22);
-    Console.Write(new string(' ', Console.WindowWidth));
-    Console.SetCursorPosition(0, 20);
-    Console.Write(new string(' ', Console.WindowWidth));
-    Console.SetCursorPosition(0, 20);
-    Console.WriteLine((Position.CheckCollisionAndReturnEnemy(myPlayer, currentLevel.Elements)?.EnemyName));
-
+    if (target != null)
+    {
+        Player.Attack(myPlayer, target);
+        if (target.Health <= 0)
+        {
+            target.Update(currentLevel.Elements, myPlayer); //TODO: detta verkar bugga lite. se över.
+            currentLevel.Delete(target);
+        }
+    }
 
     Console.SetCursorPosition(myPlayer.OldX, myPlayer.OldY);
     Console.Write(' ');
-    Console.SetCursorPosition(myPlayer.x, myPlayer.y);
-    Console.Write('@');
-
+    myPlayer.Draw();
 
     foreach (var element in currentLevel.Elements)
     {
@@ -89,7 +100,7 @@ while (true)
 
     }
 
-
+    rounds++; //TODO: behöver ändra så rounds bara uppdateras när spelaren rör på sig.
 
 }
 

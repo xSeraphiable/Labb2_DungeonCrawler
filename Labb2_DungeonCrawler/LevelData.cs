@@ -7,7 +7,13 @@ class LevelData
     public int PlayerStartingX { get; set; } = 0;
     public int PlayerStartingY { get; set; } = 0;
 
+    public int offset { get; set; } = 6;
 
+
+    public void Delete(Enemy enemy)
+    {
+        _elements.Remove(enemy);
+    }
     
        public void Load(string filename)
     {
@@ -21,20 +27,20 @@ class LevelData
                 {
                     if (line[i] == 'r')
                     {
-                        _elements.Add(new Rat() { x = i, y = row });
+                        _elements.Add(new Rat() { x = i, y = row+offset });
                     }
                     else if (line[i] == '#')
                     {
-                        _elements.Add(new Wall() { x = i, y = row });
+                        _elements.Add(new Wall() { x = i, y = row+offset });
                     }
                     else if (line[i] == 's')
                     {
-                        _elements.Add(new Snake() { x = i, y = row });
+                        _elements.Add(new Snake() { x = i, y = row+offset });
                     }
                     else if (line[i] == '@')
                     {
                         PlayerStartingX = i;
-                        PlayerStartingY = row;
+                        PlayerStartingY = row +offset;
                     }
                 }
                 row++;
