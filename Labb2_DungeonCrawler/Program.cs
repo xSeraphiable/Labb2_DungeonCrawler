@@ -12,15 +12,16 @@ currentLevel.Load("Level1.txt");
 
 var myPlayer = new Player(currentLevel.PlayerStartingX, currentLevel.PlayerStartingY);
 
-Console.Write("Enter name: ");
-myPlayer.Name = Console.ReadLine();
+//Console.Write("Enter name: ");
+//myPlayer.Name = Console.ReadLine();
 
-Console.WriteLine("Welcome " + myPlayer.Name);
-Thread.Sleep(1000);
+//Console.WriteLine("Welcome " + myPlayer.Name);
+//Thread.Sleep(1000);
+//
+//Console.WriteLine("Loading level");
+
+//Thread.Sleep(2000);
 Console.CursorVisible = false;
-Console.WriteLine("Loading level");
-
-Thread.Sleep(2000);
 Console.Clear();
 
 foreach (var element in currentLevel.Elements)

@@ -1,4 +1,6 @@
 ﻿using Labb2_DungeonCrawler;
+using System;
+using System.Diagnostics;
 
 class Player : LevelElement //TODO: se över klassen
 {
@@ -34,74 +36,56 @@ class Player : LevelElement //TODO: se över klassen
             enemy.Health -= damageToE;
             p.Health -= damageToP;
 
+
             Position.SetCursorAndWipe(0, 2);
             Console.Write($"{p.Name} deals {damageToE} dmg | {enemy.Name} HP: {enemy.Health}   ");
             Thread.Sleep(200);
 
-            Position.SetCursorAndWipe(0, 3);
-            Console.Write($"{enemy.Name} deals {damageToP} dmg | {p.Name} HP: {p.Health}   ");
-            Thread.Sleep(200);
-
-            //    int attack = p.AttackDice.Roll();
-            //    int defence = enemy.DefenceDice.Roll();
-
-            //    Position.SetCursorAndWipe(0, 2);
-            //    Console.WriteLine($"{p.Name} rolls their {p.AttackDice.ToString()} for a total of: {attack}.");
-            //    Position.SetCursorAndWipe(0, 3);
-            //    Console.WriteLine($"{enemy.Name} rolls their defence {enemy.DefenceDice.ToString()} for a total of {defence}.");
-
-            //    if (attack >= defence)
-            //    {
-            //        Position.SetCursorAndWipe(0, 3);
-            //        enemy.Health -= attack - defence;
-            //        Console.Write($"{enemy.Name} takes {attack - defence} damage.");
-            //    }
-            //    else
-            //    {
-            //        Position.SetCursorAndWipe(0, 2);
-            //        Console.WriteLine($"{enemy.Name} saves against {p.Name}'s attack.");
-            //    }
-
-            //    attack = enemy.AttackDice.Roll();
-            //    defence = p.DefenceDice.Roll();
-            //    Position.SetCursorAndWipe(0, 2);
-            //    Console.WriteLine($"{enemy.Name} rolls their {enemy.AttackDice.ToString()} for a total of {attack}.");
-            //    Position.SetCursorAndWipe(0, 3);
-            //    Console.WriteLine($"{p.Name} rolls their {p.DefenceDice.ToString()} for a total of: {defence}.");
-
-            //    if (attack >= defence)
-            //    {
-            //        Position.SetCursorAndWipe(0, 3);
-            //        p.Health -= attack - defence;
-            //        Console.Write($"{p.Name} takes {attack - defence} damage.");
-            //    }
-            //    else
-            //    {
-            //        Position.SetCursorAndWipe(0, 3);
-            //        Console.WriteLine($"{p.Name} saves against {enemy.Name}'s attack.");
-            //    }
-
-            //    if (Console.KeyAvailable)
-            //    {
-            //        var key = Console.ReadKey(true);
-            //        if (key.Key == ConsoleKey.Escape)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
+            if (enemy.Health > 0)
+            {
+                Position.SetCursorAndWipe(0, 3);
+                Console.Write($"{enemy.Name} deals {damageToP} dmg | {p.Name} HP: {p.Health}   ");
+                Thread.Sleep(200);
+            }
+            
 
             if (enemy.Health <= 0)
-        {
-            Position.SetCursorAndWipe(0, 4);
-            Console.WriteLine($"{enemy.Name} collapses to the floor and perishes...");
-        }
-        else if (p.Health <= 0)
-        {
-            Position.SetCursorAndWipe(0, 4);
-            Console.WriteLine($"GAME OVER");
+            {
+                Position.SetCursorAndWipe(0, 3);
+                PrintDeathMessage(enemy.Name);
+            }
+            else if (p.Health <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Position.SetCursorAndWipe(0, 3);
+                Console.WriteLine($"GAME OVER");
+            }
         }
 
+        Thread.Sleep(2000);
+        Position.SetCursorAndWipe(0, 2);
+        Position.SetCursorAndWipe(0, 3);
+        Position.SetCursorAndWipe(0, 4);
     }
+
+    public static void PrintDeathMessage(string name)
+    {
+        string[] deathMessage = new string[]
+        {
+            " bites the dust... literally.",
+            " has been sent back to the respawn queue.",
+            " thought they could survive... they were wrong.",
+            " goes down screaming... then quietly dies.",
+            " is no more. Say hello to the grave."
+        };
+
+        Random random = new Random();
+
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(name + deathMessage[random.Next(deathMessage.Length)]);
+        Console.ResetColor();
+
+    }
+
 
 }
