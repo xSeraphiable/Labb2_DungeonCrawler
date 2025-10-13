@@ -1,4 +1,4 @@
-﻿using Labb2_DungeonCrawler;
+﻿
 using System;
 using System.Diagnostics;
 
@@ -34,58 +34,45 @@ class Player : LevelElement //TODO: se över klassen
             int damageToP = Math.Max(enemy.AttackDice.Roll() - p.DefenceDice.Roll(), 0);
 
             enemy.Health -= damageToE;
-            p.Health -= damageToP;
+            if (enemy.Health > 0)
+            { p.Health -= damageToP; }
 
-
-            Position.SetCursorAndWipe(0, 2);
+            Position.SetCursorAndWipeEntireRow(0, 2);
+            if (enemy.Health >= 0)
+            {
             Console.Write($"{p.Name} deals {damageToE} dmg | {enemy.Name} HP: {enemy.Health}   ");
-            Thread.Sleep(200);
+            }
+            else { Console.Write($"{p.Name} deals {damageToE} dmg | {enemy.Name} HP: 0   "); }
+                Thread.Sleep(200);
 
             if (enemy.Health > 0)
             {
-                Position.SetCursorAndWipe(0, 3);
+                Position.SetCursorAndWipeEntireRow(0, 3);
                 Console.Write($"{enemy.Name} deals {damageToP} dmg | {p.Name} HP: {p.Health}   ");
                 Thread.Sleep(200);
             }
-            
+
 
             if (enemy.Health <= 0)
             {
-                Position.SetCursorAndWipe(0, 3);
-                PrintDeathMessage(enemy.Name);
+                Position.SetCursorAndWipeEntireRow(0, 3);
+                Enemy.PrintDeathMessage(enemy.Name);
             }
             else if (p.Health <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Position.SetCursorAndWipe(0, 3);
+                Position.SetCursorAndWipeEntireRow(0, 3);
                 Console.WriteLine($"GAME OVER");
             }
         }
 
         Thread.Sleep(2000);
-        Position.SetCursorAndWipe(0, 2);
-        Position.SetCursorAndWipe(0, 3);
-        Position.SetCursorAndWipe(0, 4);
+        Position.SetCursorAndWipeEntireRow(0, 2);
+        Position.SetCursorAndWipeEntireRow(0, 3);
+        Position.SetCursorAndWipeEntireRow(0, 4);
     }
 
-    public static void PrintDeathMessage(string name)
-    {
-        string[] deathMessage = new string[]
-        {
-            " bites the dust... literally.",
-            " has been sent back to the respawn queue.",
-            " thought they could survive... they were wrong.",
-            " goes down screaming... then quietly dies.",
-            " is no more. Say hello to the grave."
-        };
 
-        Random random = new Random();
-
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine(name + deathMessage[random.Next(deathMessage.Length)]);
-        Console.ResetColor();
-
-    }
 
 
 }

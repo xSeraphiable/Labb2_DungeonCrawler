@@ -1,4 +1,5 @@
-﻿using Labb2_DungeonCrawler;
+﻿
+using System.Numerics;
 using System.Security.Cryptography;
 
 class Snake : Enemy
@@ -13,53 +14,228 @@ class Snake : Enemy
         this.DefenceDice = new Dice(1, 8, 5);
     }
 
-    public override void Update(IReadOnlyList<LevelElement> Elements, Player p)
+    public override void Update(IReadOnlyList<LevelElement> Elements, Player player)
     {
-       //TODO: Förbättring krävs.. Just nu rör dom sig bara om spelaren gör det.
-        if ((Position.CalculateDistance(this.x, this.y, p.x, p.y)) < 3)
+        Console.SetCursorPosition(this.x, this.y);
+        Console.Write(" ");
+
+        if ((Position.CalculateDistance(this.x, this.y, player.x, player.y)) <= 2)
         {
-            Console.SetCursorPosition(this.x, this.y);
-            Console.Write(" ");
 
-            if (p.x - p.OldX == 0)
+            int dx = player.x - this.x;
+            int dy = player.y - this.y;
+
+            int moveX = 0;
+            int moveY = 0;
+
+
+            bool prioritizeX = Math.Abs(dx) >= Math.Abs(dy);
+
+            if (prioritizeX)
             {
-                // TODO: kanske att jag ska använda en while-loop här på något sätt istället.
-               
+                if (dx > 0)
+                    moveX = -1;
+                else if (dx < 0)
+                    moveX = 1;
 
-                if (p.y > p.OldY)
+                if (dy > 0)
+                    moveY = -1;
+                else if (dy < 0)
+                    moveY = 1;
+            }
+
+            else
+            {
+                if (dy > 0)
+                    moveY = -1;
+                else if (dy < 0)
+                    moveY = 1;
+
+                if (dx > 0)
+                    moveX = -1;
+                else if (dx < 0)
+                    moveX = 1;
+            }
+
+
+            if (prioritizeX)
+            {
+                if (moveX != 0 && Position.IsAvailable(Elements, this.x + moveX, this.y))
                 {
-                    if ((Position.IsAvailable(Elements, this.x, this.y + p.y - p.OldY)))
-                    {
-                        this.y += p.y - p.OldY;
-                    }
+                    this.x += moveX;
+                    return;
                 }
-                else
+
+                if (moveY != 0 && Position.IsAvailable(Elements, this.x, this.y + moveY))
                 {
-                    if ((Position.IsAvailable(Elements, this.x, this.y + p.OldY - p.y)))
-                    {
-                        this.y += p.OldY - p.y;
-                    }
+                    this.y += moveY;
+                    return;
                 }
             }
             else
             {
-                if (p.x > p.OldX)
+                if (moveY != 0 && Position.IsAvailable(Elements, this.x, this.y + moveY))
                 {
-                    if (Position.IsAvailable(Elements, this.x + p.OldX - p.x, this.y))
-                    {
-                        this.x += p.OldX - p.x;
-                    }
-                    else
-                    {
-
-                        if (Position.IsAvailable(Elements, this.x + p.x - p.OldX, this.y))
-                        {
-                            this.x += p.x - p.OldX;
-                        }
-                    }
+                    this.y += moveY;
+                    return;
                 }
 
+                if (moveX != 0 && Position.IsAvailable(Elements, this.x + moveX, this.y))
+                {
+                    this.x += moveX;
+                    return;
+                }
             }
+
         }
     }
+
+    //if ((Position.CalculateDistance(this.x, this.y, p.x, p.y)) <= 2)
+    //{
+    //    Console.SetCursorPosition(this.x, this.y);
+    //    Console.Write(" ");
+
+    //    int dx = p.x - this.x;
+    //    int dy = p.y - this.y;
+
+    //    if (dx > dy)
+    //    {
+    //        if (dx > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x - 1, this.y))
+    //            {
+    //                this.x -= 1;
+    //            }
+    //        }
+    //        else if (dx < 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x + 1, this.y))
+    //            {
+    //                this.x += 1;
+    //            }
+    //        }
+    //        else if (dy > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //            {
+    //                this.y -= 1;
+    //            }
+    //        }
+    //        else if (Position.IsAvailable(Elements, this.x, this.y + 1))
+    //        {
+    //            this.y += 1;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (dy > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //            {
+    //                this.y -= 1;
+    //            }
+    //        }
+    //        else if (dy < 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x, this.y + 1))
+    //            {
+    //                this.y += 1;
+    //            }
+    //        }
+    //        else if (dx > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x - 1, this.y))
+    //            {
+    //                this.x -= 1;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x + 1, this.y))
+    //            {
+    //                this.x += 1;
+    //            }
+    //        }
+    //    }
+
+    //if (dx > dy)
+    //{
+    //    if (dx < 0)
+    //    {
+    //        if (Position.IsAvailable(Elements, this.x + 1, this.y))
+    //        {
+    //            this.x += 1;
+    //        }
+    //        else if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //        {
+    //            this.y -= 1;
+    //        }
+    //        else if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //        {
+    //            this.y -= 1;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (Position.IsAvailable(Elements, this.x - 1, this.y))
+    //        {
+    //            this.x -= 1;
+    //        }
+    //        else if (Position.IsAvailable(Elements, this.x, this.y + 1))
+    //        {
+    //            this.y += 1;
+    //        }
+    //        else if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //        {
+    //            this.y -= 1;
+    //        }
+    //    }
+
+    //}
+    //if (dx < dy)
+    //{
+    //    if (dy < 0)
+    //    {
+    //        if (Position.IsAvailable(Elements, this.x, this.y + 1))
+    //        {
+    //            this.y += 1;
+    //        }
+    //        else if (dx > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x + 1, this.y))
+    //            {
+    //                this.x += 1;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x - 1, this.y))
+    //            {
+    //                this.x -= 1;
+    //            }
+    //        }
+    //    }
+    //    else if (dy > 0)
+    //    {
+    //        if (Position.IsAvailable(Elements, this.x, this.y - 1))
+    //        {
+    //            this.y -= 1;
+    //        }
+    //        else if (dx > 0)
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x + 1, this.y))
+    //            {
+    //                this.x += 1;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (Position.IsAvailable(Elements, this.x - 1, this.y))
+    //            {
+    //                this.x -= 1;
+    //            }
+    //        }
+    //    }
+    //}
 }
+

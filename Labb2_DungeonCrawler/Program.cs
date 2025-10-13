@@ -1,26 +1,17 @@
 ﻿
 using System.Data;
-using Labb2_DungeonCrawler;
+
 
 Console.Title = "Ame's DC";
 
 Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
 
-
 var currentLevel = new LevelData();
-currentLevel.Load("Level1.txt");
+string level = "Level1.txt";
+currentLevel.Load(level);
 
 var myPlayer = new Player(currentLevel.PlayerStartingX, currentLevel.PlayerStartingY);
 
-//Console.Write("Enter name: ");
-//myPlayer.Name = Console.ReadLine();
-
-//Console.WriteLine("Welcome " + myPlayer.Name);
-//Thread.Sleep(1000);
-//
-//Console.WriteLine("Loading level");
-
-//Thread.Sleep(2000);
 Console.CursorVisible = false;
 Console.Clear();
 
@@ -35,6 +26,7 @@ foreach (var element in currentLevel.Elements)
 myPlayer.Draw();
 
 int rounds = 0;
+
 while (true)
 {
 
@@ -47,18 +39,22 @@ while (true)
     if (key.Key == ConsoleKey.UpArrow)
     {
         myPlayer.y--;
+        rounds++;
     }
-    else if (key.Key == ConsoleKey.DownArrow)
+    else if (key.Key == ConsoleKey.DownArrow) 
     {
         myPlayer.y++;
+        rounds++;
     }
     else if (key.Key == ConsoleKey.RightArrow)
     {
         myPlayer.x++;
+        rounds++;
     }
     else if (key.Key == ConsoleKey.LeftArrow)
     {
         myPlayer.x--;
+        rounds++;
     }
     else if (key.Key == ConsoleKey.Escape)
     {
@@ -72,9 +68,10 @@ while (true)
     if (target != null)
     {
         Player.Attack(myPlayer, target);
+
         if (target.Health <= 0)
         {
-            target.Update(currentLevel.Elements, myPlayer); //TODO: detta verkar bugga lite. se över.
+            target.Update(currentLevel.Elements, myPlayer);
             currentLevel.Delete(target);
         }
     }
@@ -88,6 +85,7 @@ while (true)
         if (element is Enemy enemy)
         {
             enemy.Update(currentLevel.Elements, myPlayer);
+
             if (Position.CalculateDistance(enemy.x, enemy.y, myPlayer.x, myPlayer.y) <= 5)
             {
                 enemy.Draw();
@@ -96,13 +94,9 @@ while (true)
         if (element is Wall && (Position.CalculateDistance(element.x, element.y, myPlayer.x, myPlayer.y) <= 5))
         {
             element.Draw();
-
         }
 
     }
-
-    rounds++; //TODO: behöver ändra så rounds bara uppdateras när spelaren rör på sig.
-
 }
 
 
