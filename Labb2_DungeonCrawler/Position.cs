@@ -18,6 +18,16 @@ static class Position
         }
         return true;
     }
+    public static bool IsPlayerAtPosition(Player p, int x, int y)
+    {
+        return (x, y) == (p.x, p.y);
+
+    }
+
+    public static int CalculateDistance(int x, int y, int a, int b)
+    {
+        return (int)Math.Round(Math.Sqrt(((b - y) * (b - y)) + ((a - x) * (a - x))));
+    }
 
     //TODO: Du kan även låta den returnera en bas-klass (t.ex. LevelElement),
     //och sedan låta den som anropar avgöra vad det är för något.
@@ -54,16 +64,6 @@ static class Position
         return null;
     }
 
-    public static bool IsPlayerAtPosition(Player p, int x, int y)
-    {
-        return (x, y) == (p.x, p.y);
-
-    }
-
-    public static int CalculateDistance(int x, int y, int a, int b)
-    {
-        return (int)Math.Round(Math.Sqrt(((b - y) * (b - y)) + ((a - x) * (a - x))));
-    }
 
     public static void SetCursorAndWipeEntireRow(int r, int c)
     {
