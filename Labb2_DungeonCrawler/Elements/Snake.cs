@@ -22,6 +22,8 @@ class Snake : Enemy
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Enemy.PrintDeathMessage(Name);
         Console.ResetColor();
+        Console.SetCursorPosition(x, y);
+        Console.Write(' ');
     }
 
     public override void Update(List<LevelElement> Elements, Player player)

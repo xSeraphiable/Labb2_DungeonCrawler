@@ -20,17 +20,15 @@ class Rat : Enemy
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Enemy.PrintDeathMessage(Name);
         Console.ResetColor();
+        Console.SetCursorPosition(x, y);
+        Console.Write(' ');
     }
 
     public override void Update(List<LevelElement> Elements, Player p)
     {
 
-        Console.SetCursorPosition(x, y);
-        Console.Write(' ');
-
         if (IsAlive)
         {
-
             Random random = new Random();
             LevelData levelElements = new LevelData();
 
@@ -44,6 +42,8 @@ class Rat : Enemy
                 }
                 else if (Position.IsAvailable(Elements, this.x, this.y + 1))
                 {
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(' ');
                     this.y++;
                 }
             }
@@ -55,6 +55,8 @@ class Rat : Enemy
                 }
                 else if (Position.IsAvailable(Elements, this.x, this.y - 1))
                 {
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(' ');
                     this.y--;
                 }
             }
@@ -66,6 +68,8 @@ class Rat : Enemy
                 }
                 else if (Position.IsAvailable(Elements, this.x + 1, this.y))
                 {
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(' ');
                     this.x++;
                 }
             }
@@ -77,10 +81,12 @@ class Rat : Enemy
                 }
                 else if (Position.IsAvailable(Elements, this.x - 1, this.y))
                 {
-
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(' ');
                     this.x--;
                 }
             }
+
 
             if (Position.CalculateDistance(x, y, p.x, p.y) > 5)
             {

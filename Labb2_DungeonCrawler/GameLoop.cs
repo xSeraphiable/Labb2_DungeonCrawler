@@ -68,7 +68,6 @@ static class GameLoop
                 }
                 else
                 {
-                    target.Update(currentLevel.Elements, myPlayer);
                     currentLevel.Delete(target);
                 }
 
@@ -88,15 +87,25 @@ static class GameLoop
 
         Position.SetCursorAndWipeEntireRow(0, 3);
         Console.ForegroundColor = attacker.Color;
-        Console.WriteLine($"{attacker.Name} attacks {defender.Name} and deals {damage} damage.");
+        PrintTextCharByChar($"{attacker.Name} rolls their {attacker.AttackDice.ToString()} and strikes {defender.Name} dealing {damage} damage.");
         Console.ResetColor();
 
         defender.TakeDamage(damage);
 
         Thread.Sleep(1500);
         Position.SetCursorAndWipeEntireRow(0, 3);
-        //Thread.Sleep(1000);
-        Position.SetCursorAndWipeEntireRow(0, 4);
+        Position.SetCursorAndWipeEntireRow(0, 4); //TODO: den här tar bort deathmessage vid rätt tidpunkt - vilket inte är så snyggt, men har ingen bättre lösning just nu.
+
+    }
+
+    public static void PrintTextCharByChar(string text, int delay = 20)
+    {
+        foreach (char c in text)
+        {
+            Thread.Sleep(delay);
+            Console.Write(c);
+        }
+
     }
 
 
