@@ -31,14 +31,14 @@ class Snake : Enemy
         int healthDefault = Health;
         if (Health <= healthDefault / 2) { elementChar = Char.ToLower(elementChar); }
 
-        Console.SetCursorPosition(this.x, this.y);
+        Console.SetCursorPosition(x, y);
         Console.Write(" ");
 
-        if ((Position.CalculateDistance(this.x, this.y, player.x, player.y)) <= 2)
+        if ((Position.CalculateDistance(x, y, player.x, player.y)) <= 2)
         {
 
-            int dx = player.x - this.x;
-            int dy = player.y - this.y;
+            int dx = player.x - x;
+            int dy = player.y - y;
 
             int moveX = 0;
             int moveY = 0;
@@ -75,31 +75,64 @@ class Snake : Enemy
 
             if (prioritizeX)
             {
-                if (moveX != 0 && Position.IsAvailable(Elements, this.x + moveX, this.y))
+                if (moveX != 0 && Position.IsAvailable(Elements, x + moveX, y))
                 {
-                    this.x += moveX;
+                    x += moveX;
                     return;
                 }
 
-                if (moveY != 0 && Position.IsAvailable(Elements, this.x, this.y + moveY))
+                if (moveY != 0 && Position.IsAvailable(Elements, x, y + moveY))
                 {
-                    this.y += moveY;
+                    y += moveY;
                     return;
                 }
+
+                if (moveY == 0)
+                {
+                    if (Position.IsAvailable(Elements, x, y + 1))
+                    {
+                        y += 1;
+                        return;
+                    }
+                    if (Position.IsAvailable(Elements, x, y - 1))
+                    {
+                        y -= 1;
+                        return;
+                    }
+
+                }
+
             }
             else
             {
-                if (moveY != 0 && Position.IsAvailable(Elements, this.x, this.y + moveY))
+                if (moveY != 0 && Position.IsAvailable(Elements, x, y + moveY))
                 {
-                    this.y += moveY;
+                    y += moveY;
                     return;
                 }
 
-                if (moveX != 0 && Position.IsAvailable(Elements, this.x + moveX, this.y))
+                if (moveX != 0 && Position.IsAvailable(Elements, x + moveX, y))
                 {
-                    this.x += moveX;
+                    x += moveX;
                     return;
                 }
+
+                if (moveX == 0)
+                {
+                    if (Position.IsAvailable(Elements, x + 1, y))
+                    {
+                        x += 1;
+                        return;
+                    }
+                    if (Position.IsAvailable(Elements, x - 1, y))
+                    {
+                        x -= 1;
+                        return;
+                    }
+
+                }
+
+
             }
 
         }
