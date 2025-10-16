@@ -14,7 +14,17 @@ class Snake : Enemy
         this.DefenceDice = new Dice(1, 8, 5);
     }
 
-    public override void Update(IReadOnlyList<LevelElement> Elements, Player player)
+    public override void Die()
+    {
+        IsAlive = false;
+        Thread.Sleep(800);
+        Console.SetCursorPosition(0, 4);
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Enemy.PrintDeathMessage(Name);
+        Console.ResetColor();
+    }
+
+    public override void Update(List<LevelElement> Elements, Player player)
     {
         Console.SetCursorPosition(this.x, this.y);
         Console.Write(" ");

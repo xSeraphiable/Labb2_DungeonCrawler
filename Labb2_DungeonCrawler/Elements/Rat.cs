@@ -11,83 +11,84 @@ class Rat : Enemy
         this.AttackDice = new Dice(3, 6, 2);
         this.DefenceDice = new Dice(1, 6, 1);
     }
-    public override void Update(IReadOnlyList<LevelElement> Elements, Player p)
+
+    public override void Die()
+    {
+        IsAlive = false;
+        Thread.Sleep(800);
+        Console.SetCursorPosition(0, 4);
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Enemy.PrintDeathMessage(Name);
+        Console.ResetColor();
+    }
+
+    public override void Update(List<LevelElement> Elements, Player p)
     {
 
         Console.SetCursorPosition(x, y);
         Console.Write(' ');
 
-        Random random = new Random();
-        LevelData levelElements = new LevelData();
-
-        int nextStep = random.Next(4);
-
-        if (nextStep == 0)
+        if (IsAlive)
         {
-            if (Position.IsPlayerAtPosition(p, x, y + 1))
-            {
 
-                //Attack
-            }
-            else if (Position.IsAvailable(Elements, this.x, this.y + 1))
-            {
+            Random random = new Random();
+            LevelData levelElements = new LevelData();
 
-                this.y++;
-            }
-        }
-        else if (nextStep == 1)
-        {
-            if (Position.IsPlayerAtPosition(p, x, y - 1))
-            {
+            int nextStep = random.Next(4);
 
-                //Attack
-            }
-            else if (Position.IsAvailable(Elements, this.x, this.y - 1))
+            if (nextStep == 0)
             {
-                //Console.SetCursorPosition(x, y);
-                //Console.Write(' ');
-                this.y--;
+                if (Position.IsPlayerAtPosition(p, x, y + 1))
+                {
+                    GameLoop.Attack(this, p);
+                }
+                else if (Position.IsAvailable(Elements, this.x, this.y + 1))
+                {
+                    this.y++;
+                }
             }
-        }
-        else if (nextStep == 2)
-        {
-            if (Position.IsPlayerAtPosition(p, x + 1, y))
+            else if (nextStep == 1)
             {
+                if (Position.IsPlayerAtPosition(p, x, y - 1))
+                {
+                    GameLoop.Attack(this, p);
+                }
+                else if (Position.IsAvailable(Elements, this.x, this.y - 1))
+                {
+                    this.y--;
+                }
+            }
+            else if (nextStep == 2)
+            {
+                if (Position.IsPlayerAtPosition(p, x + 1, y))
+                {
+                    GameLoop.Attack(this, p);
+                }
+                else if (Position.IsAvailable(Elements, this.x + 1, this.y))
+                {
+                    this.x++;
+                }
+            }
+            else if (nextStep == 3)
+            {
+                if (Position.IsPlayerAtPosition(p, x - 1, y))
+                {
+                    GameLoop.Attack(this, p);
+                }
+                else if (Position.IsAvailable(Elements, this.x - 1, this.y))
+                {
 
-                //Attack
+                    this.x--;
+                }
             }
-            else if (Position.IsAvailable(Elements, this.x + 1, this.y))
-            {
-                //Console.SetCursorPosition(x, y);
-                //Console.Write(' ');
-                this.x++;
-            }
-        }
-        else if (nextStep == 3)
-        {
-            if (Position.IsPlayerAtPosition(p, x - 1, y))
-            {
 
-                //Attack
-            }
-            else if (Position.IsAvailable(Elements, this.x - 1, this.y))
+            if (Position.CalculateDistance(x, y, p.x, p.y) > 5)
             {
-
-                //Console.SetCursorPosition(x, y);
-                //Console.Write(' ');
-                this.x--;
+                Console.SetCursorPosition(x, y);
+                Console.Write(' ');
             }
         }
     }
 
-    //TODO: ersätt med attack och defend. Skapa en klass för att hantera dueller.
-    public void Attack()
-    {
-        AttackDice.Roll();
-    }
 
-    public void Defend()
-    {
-
-    }
 }

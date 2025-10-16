@@ -1,14 +1,7 @@
-﻿abstract class Enemy : LevelElement
+﻿abstract class Enemy : Character
 {
-    public string Name { get; set; }
 
-    public int Health { get; set; }
-
-    public Dice AttackDice { get; set; }
-
-    public Dice DefenceDice { get; set; }
-
-    public abstract void Update(IReadOnlyList<LevelElement> Elements, Player p);
+    public abstract void Update(List<LevelElement> Elements, Player p);
 
     public static void PrintDeathMessage(string name)
     {

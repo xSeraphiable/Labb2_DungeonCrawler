@@ -7,10 +7,10 @@ class LevelData
     public int PlayerStartingX { get; set; } = 0;
     public int PlayerStartingY { get; set; } = 0;
 
-    public int offset { get; set; } = 6;
+    public int offset { get; set; } = 7;
 
 
-    public void Delete(Enemy enemy)
+    public void Delete(Enemy enemy) //TODO: kanske inte ska kunna deletas?
     {
         _elements.Remove(enemy);
     }

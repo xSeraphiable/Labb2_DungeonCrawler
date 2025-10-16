@@ -1,8 +1,14 @@
-﻿static class GameLoop
+﻿using System;
+
+static class GameLoop
 {
 
     public static void Run(LevelData currentLevel, Player myPlayer)
     {
+        int rounds = 0;
+
+        myPlayer.Draw();
+
         foreach (var element in currentLevel.Elements)
         {
             if (element is Wall && (Position.CalculateDistance(element.x, element.y, myPlayer.x, myPlayer.y) <= 5))
@@ -11,11 +17,8 @@
             }
         }
 
-        myPlayer.Draw();
 
-        int rounds = 0;
-
-        while (true)
+        while (myPlayer.IsAlive)
         {
             PrintStats(myPlayer.Name, myPlayer.Health, rounds);
 
@@ -54,13 +57,21 @@
 
             if (target != null)
             {
-                Player.Attack(myPlayer, target);
+                if (target.IsAlive)
+                {
+                    Attack(myPlayer, target);
+                }
 
-                if (target.Health <= 0)
+                if (target.IsAlive)
+                {
+                    Attack(target, myPlayer);
+                }
+                else
                 {
                     target.Update(currentLevel.Elements, myPlayer);
                     currentLevel.Delete(target);
                 }
+
             }
 
             Console.SetCursorPosition(myPlayer.OldX, myPlayer.OldY);
@@ -69,9 +80,25 @@
 
             UpdateMap(myPlayer, currentLevel);
         }
-
-
     }
+
+    public static void Attack(Character attacker, Character defender)
+    {
+        int damage = Math.Max(attacker.AttackDice.Roll() - defender.DefenceDice.Roll(), 0);
+
+        Position.SetCursorAndWipeEntireRow(0, 3);
+        Console.ForegroundColor = attacker.Color;
+        Console.WriteLine($"{attacker.Name} attacks {defender.Name} and deals {damage} damage.");
+        Console.ResetColor();
+
+        defender.TakeDamage(damage);
+
+        Thread.Sleep(1500);
+        Position.SetCursorAndWipeEntireRow(0, 3);
+        //Thread.Sleep(1000);
+        Position.SetCursorAndWipeEntireRow(0, 4);
+    }
+
 
     static void PrintStats(string name, int health, int rounds)
     {
@@ -79,12 +106,16 @@
         Console.WriteLine($"|||   Player: {name}  |  Current health: {health}  |  Rounds: {rounds}  |||");
     }
 
+
+
     static void UpdateMap(Player myPlayer, LevelData currentLevel)
     {
 
+
         foreach (var element in currentLevel.Elements)
         {
-            if (element is Enemy enemy)
+
+            if (element is Enemy enemy && enemy.IsAlive)
             {
                 enemy.Update(currentLevel.Elements, myPlayer);
 
@@ -102,6 +133,7 @@
         }
 
     }
+
 
 
 }
