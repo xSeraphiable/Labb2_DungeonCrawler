@@ -29,7 +29,7 @@ class Snake : Enemy
     public override void Update(List<LevelElement> Elements, Player player)
     {
         int healthDefault = Health;
-        if (Health <= (healthDefault / 2) + 5) { elementChar = 's'; }
+        if (Health <= healthDefault / 2) { elementChar = Char.ToLower(elementChar); }
 
         Console.SetCursorPosition(this.x, this.y);
         Console.Write(" ");

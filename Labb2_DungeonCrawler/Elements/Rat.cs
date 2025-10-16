@@ -27,7 +27,7 @@ class Rat : Enemy
     public override void Update(List<LevelElement> Elements, Player p)
     {
         int healthDefault = Health;
-        if (Health <= (healthDefault / 2) + 5) { elementChar = 'r'; }
+        if (Health <= healthDefault / 2) { elementChar = char.ToLower(elementChar); }
 
         if (IsAlive)
         {
