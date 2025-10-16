@@ -22,15 +22,14 @@ do
     if (key == ConsoleKey.D1)
     {
         Console.Clear();
-        Console.CursorVisible = true;
-        GameLoop.PrintTextCharByChar("Enter player name: ", 40);
-        string name = Console.ReadLine();
-        Console.CursorVisible = false;
+
+        string playerName = GetPlayerName();
+
 
         var level = new LevelData();
         level.Load("Level1.txt");
 
-        var player = new Player(level.PlayerStartingX, level.PlayerStartingY, name);
+        var player = new Player(level.PlayerStartingX, level.PlayerStartingY, playerName);
 
         GameLoop.PrintTextCharByChar($"Loading level...", 40);
         Thread.Sleep(600);
@@ -84,6 +83,31 @@ static void GameOver()
 
     Console.ReadLine();
 
+
+}
+
+static string GetPlayerName()
+{
+    string playerName;
+    int maxLength = 20;
+
+    while (true)
+    {
+        Console.CursorVisible = true;
+        GameLoop.PrintTextCharByChar("Enter player name (max 20 chars): ", 40);
+        playerName = Console.ReadLine();
+        Console.CursorVisible = false;
+
+        if (!string.IsNullOrWhiteSpace(playerName) && playerName.Length <= maxLength)
+        {
+            break;
+        }
+        Console.WriteLine($"Name must be 1-{maxLength} characters long. Try again.\n");
+
+
+    }
+
+    return playerName;
 
 }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 static class Position
 {
-    public static bool IsAvailable(IReadOnlyList<LevelElement> Elements, int x, int y) //TODO: kan jag använda retur av objekt här precis som för spelaren?
+    public static bool IsAvailable(IReadOnlyList<LevelElement> Elements, int x, int y)
     {
         foreach (LevelElement element in Elements)
         {
