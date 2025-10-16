@@ -15,10 +15,17 @@ static class GameLoop
         {
             myPlayer.PrintStats(rounds);
 
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
+
             var key = Console.ReadKey(true);
+
             if (key.Key == ConsoleKey.Escape)
             {
-                Console.WriteLine("\nSpelet avslutas");
+                Console.Clear();
+                Console.WriteLine("Shutting down game.");
                 break;
             }
 
@@ -65,9 +72,9 @@ static class GameLoop
 
         defender.TakeDamage(damage);
 
-        Thread.Sleep(1500);
+        Thread.Sleep(1300);
         Position.SetCursorAndWipeEntireRow(0, 3);
-        Position.SetCursorAndWipeEntireRow(0, 4); //TODO: den här tar bort deathmessage vid rätt tidpunkt - vilket inte är så snyggt, men har ingen bättre lösning just nu.
+        Position.SetCursorAndWipeEntireRow(0, 4); //TODO: den här raden tar bort deathmessage (från Rat/Snake) vid rätt tidpunkt - vilket inte är så snyggt, men har ingen bättre lösning just nu.
 
     }
 
