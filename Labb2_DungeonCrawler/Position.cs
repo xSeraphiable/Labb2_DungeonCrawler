@@ -29,9 +29,6 @@ static class Position
         return (int)Math.Round(Math.Sqrt(((b - y) * (b - y)) + ((a - x) * (a - x))));
     }
 
-    //TODO: Du kan även låta den returnera en bas-klass (t.ex. LevelElement),
-    //och sedan låta den som anropar avgöra vad det är för något.
-    //Då kan metoden heta t.ex.GetCollidingElement() — mer generiskt och flexibelt.
     public static Enemy CheckCollisionAndReturnEnemy(Player p, IReadOnlyList<LevelElement> Elements)
     {
         foreach (var element in Elements)
@@ -63,7 +60,6 @@ static class Position
 
         return null;
     }
-
 
     public static void SetCursorAndWipeEntireRow(int r, int c)
     {
