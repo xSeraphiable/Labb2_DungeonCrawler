@@ -20,6 +20,41 @@ class Player : Character
         this.Name = name;
     }
 
+    public void PrintStats(int rounds)
+    {
+        Console.SetCursorPosition(0, 0);
+        Console.WriteLine($"|||   Player: {Name}  |  Current health: {Health}  |  Rounds: {rounds}  |||");
+    }
+
+    public void HandleInput(ConsoleKey key)
+    {
+        OldX = x;
+        OldY = y;
+
+
+        if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
+        {
+            y--;
+
+        }
+        else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
+        {
+            y++;
+
+        }
+        else if (key == ConsoleKey.RightArrow || key == ConsoleKey.D)
+        {
+            x++;
+
+        }
+        else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A)
+        {
+            x--;
+
+        }
+
+    }
+
     public override void Die()
     {
         IsAlive = false;

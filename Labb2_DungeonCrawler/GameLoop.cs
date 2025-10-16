@@ -9,48 +9,21 @@ static class GameLoop
 
         myPlayer.Draw();
 
-        foreach (var element in currentLevel.Elements)
-        {
-            if (element is Wall && (Position.CalculateDistance(element.x, element.y, myPlayer.x, myPlayer.y) <= 5))
-            {
-                element.Draw();
-            }
-        }
+        UpdateMap(myPlayer, currentLevel);
 
         while (myPlayer.IsAlive)
         {
-            PrintStats(myPlayer.Name, myPlayer.Health, rounds);
-
-            myPlayer.OldX = myPlayer.x;
-            myPlayer.OldY = myPlayer.y;
+            myPlayer.PrintStats(rounds);
 
             var key = Console.ReadKey(true);
-            if (key.Key == ConsoleKey.UpArrow || key.Key == ConsoleKey.W)
+            if (key.Key == ConsoleKey.Escape)
             {
-                myPlayer.y--;
-                rounds++;
-            }
-            else if (key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.S)
-            {
-                myPlayer.y++;
-                rounds++;
-            }
-            else if (key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.D)
-            {
-                myPlayer.x++;
-                rounds++;
-            }
-            else if (key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.A)
-            {
-                myPlayer.x--;
-                rounds++;
-            }
-            else if (key.Key == ConsoleKey.Escape)
-            {
-
                 Console.WriteLine("\nSpelet avslutas");
                 break;
             }
+
+            myPlayer.HandleInput(key.Key);
+            rounds++;
 
             var target = Position.CheckCollisionAndReturnEnemy(myPlayer, currentLevel.Elements);
 
@@ -69,16 +42,17 @@ static class GameLoop
                 {
                     currentLevel.Delete(target);
                 }
-
             }
 
             Console.SetCursorPosition(myPlayer.OldX, myPlayer.OldY);
             Console.Write(' ');
-            myPlayer.Draw();
 
+            myPlayer.Draw();
             UpdateMap(myPlayer, currentLevel);
         }
     }
+
+
 
     public static void Attack(Character attacker, Character defender)
     {
@@ -105,12 +79,6 @@ static class GameLoop
             Console.Write(c);
         }
 
-    }
-
-    static void PrintStats(string name, int health, int rounds) //TODO: borde flytta detta och allt som har med hur spelaren rör sig till spelaren?
-    {
-        Console.SetCursorPosition(0, 0);
-        Console.WriteLine($"|||   Player: {name}  |  Current health: {health}  |  Rounds: {rounds}  |||");
     }
 
 
