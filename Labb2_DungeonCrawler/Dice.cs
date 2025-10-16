@@ -21,7 +21,7 @@ class Dice
 
         for (int i = 0; i < numberOfDice; i++)
         {
-            sum += rnd.Next(sidesPerDice);
+            sum += rnd.Next(1, sidesPerDice + 1);
         }
 
         return sum + modifier;
