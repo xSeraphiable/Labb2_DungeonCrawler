@@ -38,6 +38,7 @@ do
 
         GameLoop.Run(level, player);
         if (!player.IsAlive) { GameOver(); }
+        else { Environment.Exit(0); }
     }
     else if (key == ConsoleKey.D2)
     {

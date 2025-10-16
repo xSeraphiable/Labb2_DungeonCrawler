@@ -10,12 +10,12 @@ class LevelData
     public int offset { get; set; } = 7;
 
 
-    public void Delete(Enemy enemy) //TODO: kanske inte ska kunna deletas?
+    public void Delete(Enemy enemy)
     {
         _elements.Remove(enemy);
     }
-    
-       public void Load(string filename)
+
+    public void Load(string filename)
     {
         using (StreamReader reader = new StreamReader(filename))
         {
@@ -27,20 +27,20 @@ class LevelData
                 {
                     if (line[i] == 'r')
                     {
-                        _elements.Add(new Rat() { x = i, y = row+offset });
+                        _elements.Add(new Rat() { x = i, y = row + offset });
                     }
                     else if (line[i] == '#')
                     {
-                        _elements.Add(new Wall() { x = i, y = row+offset });
+                        _elements.Add(new Wall() { x = i, y = row + offset });
                     }
                     else if (line[i] == 's')
                     {
-                        _elements.Add(new Snake() { x = i, y = row+offset });
+                        _elements.Add(new Snake() { x = i, y = row + offset });
                     }
                     else if (line[i] == '@')
                     {
                         PlayerStartingX = i;
-                        PlayerStartingY = row +offset;
+                        PlayerStartingY = row + offset;
                     }
                 }
                 row++;

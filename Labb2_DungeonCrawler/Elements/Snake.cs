@@ -9,7 +9,7 @@ class Snake : Enemy
         this.Name = "Snake";
         this.Health = 25;
         this.Color = ConsoleColor.Cyan;
-        this.elementChar = 's';
+        this.elementChar = 'S';
         this.AttackDice = new Dice(3, 4, 2);
         this.DefenceDice = new Dice(1, 8, 5);
     }
@@ -28,6 +28,9 @@ class Snake : Enemy
 
     public override void Update(List<LevelElement> Elements, Player player)
     {
+        int healthDefault = Health;
+        if (Health <= (healthDefault/2)+5) { elementChar = 's'; }
+
         Console.SetCursorPosition(this.x, this.y);
         Console.Write(" ");
 

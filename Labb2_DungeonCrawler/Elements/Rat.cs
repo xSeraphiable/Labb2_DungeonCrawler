@@ -7,7 +7,7 @@ class Rat : Enemy
         this.Name = "Rat";
         this.Health = 10;
         this.Color = ConsoleColor.Yellow;
-        this.elementChar = 'r';
+        this.elementChar = 'R';
         this.AttackDice = new Dice(3, 6, 2);
         this.DefenceDice = new Dice(1, 6, 1);
     }
@@ -26,6 +26,8 @@ class Rat : Enemy
 
     public override void Update(List<LevelElement> Elements, Player p)
     {
+        int healthDefault = Health;
+        if (Health <= (healthDefault / 2) + 5) { elementChar = 'r'; }
 
         if (IsAlive)
         {
