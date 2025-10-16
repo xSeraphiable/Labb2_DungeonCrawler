@@ -17,7 +17,6 @@ static class GameLoop
             }
         }
 
-
         while (myPlayer.IsAlive)
         {
             PrintStats(myPlayer.Name, myPlayer.Health, rounds);
@@ -26,22 +25,22 @@ static class GameLoop
             myPlayer.OldY = myPlayer.y;
 
             var key = Console.ReadKey(true);
-            if (key.Key == ConsoleKey.UpArrow)
+            if (key.Key == ConsoleKey.UpArrow || key.Key == ConsoleKey.W)
             {
                 myPlayer.y--;
                 rounds++;
             }
-            else if (key.Key == ConsoleKey.DownArrow)
+            else if (key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.S)
             {
                 myPlayer.y++;
                 rounds++;
             }
-            else if (key.Key == ConsoleKey.RightArrow)
+            else if (key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.D)
             {
                 myPlayer.x++;
                 rounds++;
             }
-            else if (key.Key == ConsoleKey.LeftArrow)
+            else if (key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.A)
             {
                 myPlayer.x--;
                 rounds++;
@@ -108,22 +107,17 @@ static class GameLoop
 
     }
 
-
-    static void PrintStats(string name, int health, int rounds)
+    static void PrintStats(string name, int health, int rounds) //TODO: borde flytta detta och allt som har med hur spelaren rör sig till spelaren?
     {
         Console.SetCursorPosition(0, 0);
         Console.WriteLine($"|||   Player: {name}  |  Current health: {health}  |  Rounds: {rounds}  |||");
     }
 
 
-
     static void UpdateMap(Player myPlayer, LevelData currentLevel)
     {
-
-
         foreach (var element in currentLevel.Elements)
         {
-
             if (element is Enemy enemy && enemy.IsAlive)
             {
                 enemy.Update(currentLevel.Elements, myPlayer);
@@ -138,11 +132,6 @@ static class GameLoop
             {
                 element.Draw();
             }
-
         }
-
     }
-
-
-
 }

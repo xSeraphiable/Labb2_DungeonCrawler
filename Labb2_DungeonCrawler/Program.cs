@@ -5,8 +5,10 @@ Console.Title = "Ame's DC";
 
 Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
 
+ConsoleColor gamecolor = ConsoleColor.DarkYellow;
+
 Console.CursorVisible = false;
-Console.ForegroundColor = ConsoleColor.Magenta;
+Console.ForegroundColor = gamecolor;
 Console.WriteLine("DUNGEON CRAWLER");
 Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine("\n  [1] Start Game");
@@ -30,7 +32,7 @@ do
 
         var player = new Player(level.PlayerStartingX, level.PlayerStartingY, name);
 
-        GameLoop.PrintTextCharByChar($"Loading {level}...", 40);
+        GameLoop.PrintTextCharByChar($"Loading level...", 40);
         Thread.Sleep(600);
         Console.Clear();
 
@@ -40,20 +42,20 @@ do
     else if (key == ConsoleKey.D2)
     {
         Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.ForegroundColor = gamecolor;
         Console.WriteLine("INSTRUCTIONS");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("\n- Move with [Arrow Keys] or [W A S D]");
-        Console.WriteLine("- Explore the tunnels and survive.");
-        Console.WriteLine("- Attack enemies by moving into them.");
-        Console.WriteLine("- Watch your health bar — when it reaches zero, it’s GAME OVER.");
-        Console.WriteLine("- Some enemies fight back...");
-        Console.WriteLine("- ... and there might not be a way out - except death or ESCape...");
+        Console.WriteLine("\n  - Move with [Arrow Keys] or [W A S D]");
+        Console.WriteLine("  - Explore the tunnels and survive.");
+        Console.WriteLine("  - Attack enemies by moving into them.");
+        Console.WriteLine("  - Watch your health bar — when it reaches zero, it’s GAME OVER.");
+        Console.WriteLine("  - Some enemies fight back...");
+        Console.WriteLine("  - ... and there might not be a way out - except death or ESCape...");
         Console.WriteLine("\nPress [Enter] to return to the menu.");
 
         while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.ForegroundColor = gamecolor;
         Console.WriteLine("DUNGEON CRAWLER");
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\n  [1] Start Game");
@@ -67,26 +69,6 @@ do
     }
 
 } while (true);
-
-//var currentLevel = new LevelData();
-//string level = "Level1.txt";
-//currentLevel.Load(level);
-
-//GameLoop.PrintTextCharByChar("\nEnter player name and confirm with [enter]: ", 50);
-//string playerName = Console.ReadLine(); //TODO: begränsa antal tecken som man kan ange?
-
-//var myPlayer = new Player(currentLevel.PlayerStartingX, currentLevel.PlayerStartingY, playerName);
-
-//GameLoop.PrintTextCharByChar("\nUse arrows or [w a s d] to move around, one step at a time.");
-
-//GameLoop.PrintTextCharByChar($"\nLoading {level}", 50);
-
-
-//Thread.Sleep(500);
-//Console.CursorVisible = false;
-//Console.Clear();
-
-//GameLoop.Run(currentLevel, myPlayer);
 
 
 static void GameOver()
