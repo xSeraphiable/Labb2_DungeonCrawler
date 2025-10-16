@@ -35,22 +35,18 @@ class Player : Character
         if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
         {
             y--;
-
         }
         else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
         {
             y++;
-
         }
         else if (key == ConsoleKey.RightArrow || key == ConsoleKey.D)
         {
             x++;
-
         }
         else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A)
         {
             x--;
-
         }
 
     }

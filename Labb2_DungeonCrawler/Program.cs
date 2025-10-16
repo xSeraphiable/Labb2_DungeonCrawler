@@ -1,7 +1,8 @@
 ﻿
 using System.Data;
+using System.Globalization;
 
-Console.Title = "Ame's DC";
+Console.Title = "Dungeon Crawler 0.2";
 
 Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
 
@@ -11,9 +12,10 @@ Console.CursorVisible = false;
 Console.ForegroundColor = gamecolor;
 Console.WriteLine("DUNGEON CRAWLER");
 Console.ForegroundColor = ConsoleColor.White;
-Console.WriteLine("\n  [1] Start Game");
-Console.WriteLine("  [2] Instructions");
-Console.WriteLine("  [3] Quit");
+Console.WriteLine(
+           "\n  [1] Start Game" +
+           "\n  [2] Instructions" +
+           "\n  [3] Quit");
 
 ConsoleKey key;
 do
@@ -25,13 +27,12 @@ do
 
         string playerName = GetPlayerName();
 
-
         var level = new LevelData();
         level.Load("Level1.txt");
 
         var player = new Player(level.PlayerStartingX, level.PlayerStartingY, playerName);
 
-        GameLoop.PrintTextCharByChar($"Loading level...", 40);
+        GameLoop.PrintTextCharByChar($"\nLoading level...", 40);
         Thread.Sleep(600);
         Console.Clear();
 
@@ -45,24 +46,27 @@ do
         Console.ForegroundColor = gamecolor;
         Console.WriteLine("INSTRUCTIONS");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("\n  - Move with [Arrow Keys] or [W A S D]");
-        Console.WriteLine("  - Explore the tunnels and survive.");
-        Console.WriteLine("  - Attack enemies by moving into them.");
-        Console.WriteLine("  - Watch your health bar — when it reaches zero, it’s GAME OVER.");
-        Console.WriteLine("  - Some enemies fight back...");
-        Console.WriteLine("  - ... and there might not be a way out - except death or ESCape...");
-        Console.WriteLine("\nPress [Enter] to return to the menu.");
+
+        Console.WriteLine(
+            "\n  - Move with [Arrow Keys] or [W A S D]" +
+            "\n  - Explore the tunnels and survive." +
+            "\n  - Attack enemies by moving into them." +
+            "\n  - Watch your health bar — when it reaches zero, it’s GAME OVER." +
+            "\n  - Some enemies fight back..." +
+            "\n  - ... and there might not be a way out - except death or ESCape..." +
+            "\n\nPress [Enter] to return to the menu.");
 
         while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         Console.Clear();
         Console.ForegroundColor = gamecolor;
         Console.WriteLine("DUNGEON CRAWLER");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("\n  [1] Start Game");
-        Console.WriteLine("  [2] Instructions");
-        Console.WriteLine("  [3] Quit");
+        Console.WriteLine(
+            "\n  [1] Start Game" +
+            "\n  [2] Instructions" +
+            "\n  [3] Quit");
     }
-    else if (key == ConsoleKey.D3)
+    else if (key == ConsoleKey.D3 || key == ConsoleKey.Escape)
     {
         GameLoop.PrintTextCharByChar("Goodbye!", 40);
         Environment.Exit(0);
@@ -75,26 +79,21 @@ static void GameOver()
 {
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.DarkRed;
-    Console.SetCursorPosition(10, 15);
-
     GameLoop.PrintTextCharByChar("GAME OVER", 200);
 
     Console.ResetColor();
-
-    Console.ReadLine();
-
 
 }
 
 static string GetPlayerName()
 {
     string playerName;
-    int maxLength = 20;
+    int maxLength = 15;
 
     while (true)
     {
         Console.CursorVisible = true;
-        GameLoop.PrintTextCharByChar("Enter player name (max 20 chars): ", 40);
+        GameLoop.PrintTextCharByChar($"Enter player name (max {maxLength} chars): ", 40);
         playerName = Console.ReadLine();
         Console.CursorVisible = false;
 
@@ -103,11 +102,10 @@ static string GetPlayerName()
             break;
         }
         Console.WriteLine($"Name must be 1-{maxLength} characters long. Try again.\n");
-
-
     }
 
-    return playerName;
+    TextInfo myTI = new CultureInfo("sv-SE", false).TextInfo;
+    return myTI.ToTitleCase(playerName);
 
 }
 
