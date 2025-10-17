@@ -61,14 +61,5 @@ static class Position
         return null;
     }
 
-    public static void SetCursorAndWipeEntireRow(int r, int c)
-    {
-        Thread.Sleep(500);
-        Console.SetCursorPosition(r, c);
-        Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(r, c);
-
-    }
-
 }
 

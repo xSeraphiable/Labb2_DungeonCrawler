@@ -4,8 +4,6 @@ using System.Globalization;
 
 Console.Title = "Dungeon Crawler 0.2";
 
-Directory.SetCurrentDirectory(@"C:\Users\amand\source\repos\Labb2_DungeonCrawler\Labb2_DungeonCrawler\Levels");
-
 ConsoleColor gamecolor = ConsoleColor.DarkYellow;
 
 Console.CursorVisible = false;
@@ -25,14 +23,13 @@ do
     {
         Console.Clear();
 
-        string playerName = GetPlayerName();
-
         var level = new LevelData();
-        level.Load("Level1.txt");
+        level.Load(Path.Combine("Levels", "Level1.txt"));
 
+        string playerName = GetPlayerName();
         var player = new Player(level.PlayerStartingX, level.PlayerStartingY, playerName);
 
-        GameLoop.PrintTextCharByChar($"\nLoading level...", 40);
+        TextEffects.PrintTextCharByChar($"\nLoading level...", 40);
         Thread.Sleep(600);
         Console.Clear();
 
@@ -68,7 +65,7 @@ do
     }
     else if (key == ConsoleKey.D3 || key == ConsoleKey.Escape)
     {
-        GameLoop.PrintTextCharByChar("Goodbye!", 40);
+        TextEffects.PrintTextCharByChar("Goodbye!", 40);
         Environment.Exit(0);
     }
 
@@ -79,7 +76,7 @@ static void GameOver()
 {
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.DarkRed;
-    GameLoop.PrintTextCharByChar("GAME OVER", 200);
+    TextEffects.PrintTextCharByChar("GAME OVER", 200);
 
     Console.ResetColor();
 
@@ -93,7 +90,7 @@ static string GetPlayerName()
     while (true)
     {
         Console.CursorVisible = true;
-        GameLoop.PrintTextCharByChar($"Enter player name (max {maxLength} chars): ", 40);
+        TextEffects.PrintTextCharByChar($"Enter player name (max {maxLength} chars): ", 40);
         playerName = Console.ReadLine();
         Console.CursorVisible = false;
 

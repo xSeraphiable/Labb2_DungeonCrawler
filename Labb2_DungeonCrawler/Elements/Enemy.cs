@@ -24,7 +24,7 @@
         Random random = new Random();
 
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        GameLoop.PrintTextCharByChar(name + deathMessage[random.Next(deathMessage.Length)]);
+        TextEffects.PrintTextCharByChar(name + deathMessage[random.Next(deathMessage.Length)]);
         Console.ResetColor();
     }
 
