@@ -4,14 +4,13 @@ using System.Security.Cryptography;
 
 class Snake : Enemy
 {
-    public Snake()
+    public Snake() : base(25)
     {
         this.Name = "Snake";
-        this.Health = 25;
         this.Color = ConsoleColor.Cyan;
         this.elementChar = 'S';
         this.AttackDice = new Dice(3, 4, 2);
-        this.DefenceDice = new Dice(1, 8, 5);
+        this.DefenceDice = new Dice(1, 8, 3);
     }
 
     public override void Die()
@@ -27,9 +26,8 @@ class Snake : Enemy
     }
 
     public override void Update(List<LevelElement> Elements, Player player)
-    {
-        int healthDefault = Health;
-        if (Health <= healthDefault / 2) { elementChar = Char.ToLower(elementChar); }
+    {        
+        if (Health <= _healthDefault / 2) { elementChar = Char.ToLower(elementChar); }
 
         Console.SetCursorPosition(x, y);
         Console.Write(" ");

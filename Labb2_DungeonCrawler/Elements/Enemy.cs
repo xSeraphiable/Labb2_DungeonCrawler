@@ -1,5 +1,12 @@
 ﻿abstract class Enemy : Character
 {
+    protected readonly int _healthDefault;
+
+    public Enemy(int startingHealth)
+    {
+        this.Health = startingHealth;
+        this._healthDefault = startingHealth;
+    }
 
     public abstract void Update(List<LevelElement> Elements, Player p);
 

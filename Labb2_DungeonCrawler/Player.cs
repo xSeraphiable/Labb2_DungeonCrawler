@@ -14,7 +14,7 @@ class Player : Character
         this.Color = ConsoleColor.White;
         this.x = x;
         this.y = y;
-        this.AttackDice = new Dice(3, 6, 2);
+        this.AttackDice = new Dice(2, 6, 2);
         this.DefenceDice = new Dice(2, 6, 0);
         this.Health = 100;
         this.Name = name;
