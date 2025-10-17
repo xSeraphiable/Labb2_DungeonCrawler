@@ -1,8 +1,8 @@
 ﻿abstract class Character : LevelElement
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = "Unknown";
     public int Health { get; set; }
-    public Dice AttackDice { get; set; }
+    public Dice AttackDice { get; set; } 
     public Dice DefenceDice { get; set; }
 
     public bool IsAlive { get; set; } = true;

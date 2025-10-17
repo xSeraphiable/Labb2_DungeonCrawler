@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 
 static class GameLoop
 {
@@ -45,11 +46,14 @@ static class GameLoop
                 {
                     Attack(target, myPlayer);
                 }
-                else
+                if (!target.IsAlive)
                 {
                     currentLevel.Delete(target);
+                    target = null;
                 }
             }
+
+
 
             Console.SetCursorPosition(myPlayer.OldX, myPlayer.OldY);
             Console.Write(' ');
@@ -84,7 +88,7 @@ static class GameLoop
         {
             if (element is Enemy enemy && enemy.IsAlive)
             {
-                enemy.Update(currentLevel.Elements, myPlayer);
+                enemy.Update(currentLevel.Elements, myPlayer, currentLevel);
 
                 if (Position.CalculateDistance(enemy.x, enemy.y, myPlayer.x, myPlayer.y) <= 5)
                 {

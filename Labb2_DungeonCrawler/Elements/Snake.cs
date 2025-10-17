@@ -25,7 +25,7 @@ class Snake : Enemy
         Console.Write(' ');
     }
 
-    public override void Update(List<LevelElement> Elements, Player player)
+    public override void Update(List<LevelElement> Elements, Player player, LevelData currentLevel)
     {        
         if (Health <= _healthDefault / 2) { elementChar = Char.ToLower(elementChar); }
 

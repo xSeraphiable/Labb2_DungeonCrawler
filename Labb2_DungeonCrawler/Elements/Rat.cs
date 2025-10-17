@@ -3,7 +3,7 @@
 class Rat : Enemy
 {
 
-    public Rat() : base (10)
+    public Rat() : base(10)
     {
         this.Name = "Rat";
         this.Color = ConsoleColor.Yellow;
@@ -15,16 +15,18 @@ class Rat : Enemy
     public override void Die()
     {
         IsAlive = false;
+
         Thread.Sleep(800);
         Console.SetCursorPosition(0, 4);
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Enemy.PrintDeathMessage(Name);
         Console.ResetColor();
+
         Console.SetCursorPosition(x, y);
         Console.Write(' ');
     }
 
-    public override void Update(List<LevelElement> Elements, Player p)
+    public override void Update(List<LevelElement> Elements, Player player, LevelData currentLevel)
     {
         if (Health <= _healthDefault / 2) { elementChar = char.ToLower(elementChar); }
 
@@ -37,9 +39,10 @@ class Rat : Enemy
 
             if (nextStep == 0)
             {
-                if (Position.IsPlayerAtPosition(p, x, y + 1))
+                if (Position.IsPlayerAtPosition(player, x, y + 1))
                 {
-                    GameLoop.Attack(this, p);
+                    AttackPlayer(player, currentLevel);
+
                 }
                 else if (Position.IsAvailable(Elements, this.x, this.y + 1))
                 {
@@ -50,9 +53,9 @@ class Rat : Enemy
             }
             else if (nextStep == 1)
             {
-                if (Position.IsPlayerAtPosition(p, x, y - 1))
+                if (Position.IsPlayerAtPosition(player, x, y - 1))
                 {
-                    GameLoop.Attack(this, p);
+                    AttackPlayer(player, currentLevel);
                 }
                 else if (Position.IsAvailable(Elements, this.x, this.y - 1))
                 {
@@ -63,9 +66,10 @@ class Rat : Enemy
             }
             else if (nextStep == 2)
             {
-                if (Position.IsPlayerAtPosition(p, x + 1, y))
+                if (Position.IsPlayerAtPosition(player, x + 1, y))
                 {
-                    GameLoop.Attack(this, p);
+                    AttackPlayer(player, currentLevel);
+
                 }
                 else if (Position.IsAvailable(Elements, this.x + 1, this.y))
                 {
@@ -76,9 +80,9 @@ class Rat : Enemy
             }
             else if (nextStep == 3)
             {
-                if (Position.IsPlayerAtPosition(p, x - 1, y))
+                if (Position.IsPlayerAtPosition(player, x - 1, y))
                 {
-                    GameLoop.Attack(this, p);
+                    AttackPlayer(player, currentLevel);
                 }
                 else if (Position.IsAvailable(Elements, this.x - 1, this.y))
                 {
@@ -89,7 +93,7 @@ class Rat : Enemy
             }
 
 
-            if (Position.CalculateDistance(x, y, p.x, p.y) > 5)
+            if (Position.CalculateDistance(x, y, player.x, player.y) > 5)
             {
                 Console.SetCursorPosition(x, y);
                 Console.Write(' ');
@@ -97,5 +101,18 @@ class Rat : Enemy
         }
     }
 
+    private void AttackPlayer(Player player, LevelData currentLevel)
+    {
 
+        GameLoop.Attack(this, player);
+        if (player.IsAlive && IsAlive)
+        {
+            GameLoop.Attack(player, this);
+        }
+        if (!IsAlive)
+        {
+            currentLevel.Delete(this);
+        }
+
+    }
 }

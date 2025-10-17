@@ -94,7 +94,7 @@ static void GameOver()
 
 static string GetPlayerName()
 {
-    string playerName;
+    string? playerName;
     int maxLength = 15;
 
     while (true)

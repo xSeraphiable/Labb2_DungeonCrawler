@@ -22,7 +22,7 @@ class LevelData
             int row = 0;
             while (!reader.EndOfStream)
             {
-                string line = reader.ReadLine();
+                string? line = reader.ReadLine();
                 for (int i = 0; i < line.Length; i++)
                 {
                     if (line[i] == 'r')

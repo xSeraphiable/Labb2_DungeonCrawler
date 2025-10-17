@@ -8,7 +8,7 @@
         this._healthDefault = startingHealth;
     }
 
-    public abstract void Update(List<LevelElement> Elements, Player p);
+    public abstract void Update(List<LevelElement> Elements, Player p, LevelData currentLevel);
 
     public static void PrintDeathMessage(string name)
     {
