@@ -1,19 +1,11 @@
 ﻿
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 
-Console.Title = "Dungeon Crawler 0.2";
 
-ConsoleColor gamecolor = ConsoleColor.DarkYellow;
-
-Console.CursorVisible = false;
-Console.ForegroundColor = gamecolor;
-Console.WriteLine("DUNGEON CRAWLER");
-Console.ForegroundColor = ConsoleColor.White;
-Console.WriteLine(
-           "\n  [1] Start Game" +
-           "\n  [2] Instructions" +
-           "\n  [3] Quit");
+ConfigureConsole();
+PrintMenu();
 
 ConsoleKey key;
 do
@@ -29,19 +21,20 @@ do
         string playerName = GetPlayerName();
         var player = new Player(level.PlayerStartingX, level.PlayerStartingY, playerName);
 
-        TextEffects.PrintTextCharByChar($"\nLoading level...", 40);
+        TextDisplay.PrintTextCharByChar($"\nLoading level...", 40);
         Thread.Sleep(600);
         Console.Clear();
 
         GameLoop.Run(level, player);
+
         if (!player.IsAlive) { GameOver(); }
         else { Environment.Exit(0); }
     }
     else if (key == ConsoleKey.D2)
     {
         Console.Clear();
-        Console.ForegroundColor = gamecolor;
-        Console.WriteLine("INSTRUCTIONS");
+
+        PrintHeader("INSTRUCTIONS");
         Console.ForegroundColor = ConsoleColor.White;
 
         Console.WriteLine(
@@ -54,32 +47,49 @@ do
             "\n\nPress [Enter] to return to the menu.");
 
         while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+
         Console.Clear();
-        Console.ForegroundColor = gamecolor;
-        Console.WriteLine("DUNGEON CRAWLER");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine(
-            "\n  [1] Start Game" +
-            "\n  [2] Instructions" +
-            "\n  [3] Quit");
+        PrintMenu();
+
     }
     else if (key == ConsoleKey.D3 || key == ConsoleKey.Escape)
     {
-        TextEffects.PrintTextCharByChar("Goodbye!", 40);
+        TextDisplay.PrintTextCharByChar("Goodbye!", 40);
         Environment.Exit(0);
     }
 
 } while (true);
 
+static void PrintHeader(string text)
+{
+    Console.ForegroundColor = ConsoleColor.DarkYellow;
+    Console.WriteLine(text);
+    Console.ResetColor();
+}
+
+static void PrintMenu()
+{
+    PrintHeader("DUNGEON CRAWLER");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine(
+               "\n  [1] Start Game" +
+               "\n  [2] Instructions" +
+               "\n  [3] Quit");
+
+}
+static void ConfigureConsole()
+{
+    Console.Title = "Dungeon Crawler 0.2";
+    Console.CursorVisible = false;
+}
 
 static void GameOver()
 {
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.DarkRed;
-    TextEffects.PrintTextCharByChar("GAME OVER", 200);
+    TextDisplay.PrintTextCharByChar("GAME OVER", 200);
 
     Console.ResetColor();
-
 }
 
 static string GetPlayerName()
@@ -90,7 +100,7 @@ static string GetPlayerName()
     while (true)
     {
         Console.CursorVisible = true;
-        TextEffects.PrintTextCharByChar($"Enter player name (max {maxLength} chars): ", 40);
+        TextDisplay.PrintTextCharByChar($"Enter player name (max {maxLength} chars): ", 40);
         playerName = Console.ReadLine();
         Console.CursorVisible = false;
 
@@ -105,6 +115,7 @@ static string GetPlayerName()
     return myTI.ToTitleCase(playerName);
 
 }
+
 
 
 

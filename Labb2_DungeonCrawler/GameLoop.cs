@@ -63,19 +63,18 @@ static class GameLoop
 
     public static void Attack(Character attacker, Character defender)
     {
+        TextDisplay.SetCursorAndWipeEntireRow(0, 4);
         int damage = Math.Max(attacker.AttackDice.Roll() - defender.DefenceDice.Roll(), 0);
 
-        TextEffects.SetCursorAndWipeEntireRow(0, 3);
+        TextDisplay.SetCursorAndWipeEntireRow(0, 3);
         Console.ForegroundColor = attacker.Color;
-        TextEffects.PrintTextCharByChar($"{attacker.Name} rolls their {attacker.AttackDice.ToString()} and strikes {defender.Name} dealing {damage} damage.");
+        TextDisplay.PrintTextCharByChar($"{attacker.Name} rolls their {attacker.AttackDice.ToString()} and strikes {defender.Name} dealing {damage} damage.");
         Console.ResetColor();
 
         defender.TakeDamage(damage);
 
         Thread.Sleep(1300);
-        TextEffects.SetCursorAndWipeEntireRow(0, 3);
-        TextEffects.SetCursorAndWipeEntireRow(0, 4); //TODO: den här raden tar bort deathmessage (från Rat/Snake) vid rätt tidpunkt - vilket inte är så snyggt, men har ingen bättre lösning just nu.
-
+        TextDisplay.SetCursorAndWipeEntireRow(0, 3);
     }
 
 
